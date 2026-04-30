@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Bava Restaurant - Find our locations, make reservations, and get in touch">
+    <meta name="theme-color" content="#1a5d1a">
+    <title>Contact Us | Bava Restaurant</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- ===== CINEMATIC LOADER ===== -->
+    <div class="loader-screen" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo-wrap">
+                <div class="loader-glow"></div>
+                <h1 class="loader-logo">BAVA</h1>
+            </div>
+            <p class="loader-tagline">Taste of East Africa</p>
+            <div class="loader-progress-wrap">
+                <div class="loader-progress-bar">
+                    <div class="loader-progress-fill" id="loaderProgress"></div>
+                </div>
+                <p class="loader-progress-text">Loading...</p>
+            </div>
+        </div>
+        <div class="loader-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="loader-lines">
+            <div class="loader-line"></div>
+            <div class="loader-line"></div>
+            <div class="loader-line"></div>
+            <div class="loader-line"></div>
+            <div class="loader-line"></div>
+        </div>
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon"><i class="fas fa-utensils"></i></span>
+                <span class="logo-text">BAVA</span>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="menu.html" class="nav-link">Menu</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+
+            <div class="nav-auth">
+                <button class="nav-signin" onclick="openModal('signInModal')">Sign In</button>
+                <button class="nav-signup" onclick="openModal('signUpModal')">Sign Up</button>
+            </div>
+
+            <div class="nav-actions">
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <div class="hamburger-btn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== MOBILE MENU ===== -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileMenuClose">&times;</button>
+        <ul class="mobile-nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="menu.html"><i class="fas fa-utensils"></i> Menu</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+        <div class="mobile-nav-auth">
+            <button class="btn btn-primary" onclick="closeMobileMenu(); openModal('signInModal');">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </button>
+            <button class="btn btn-secondary" onclick="closeMobileMenu(); openModal('signUpModal');">
+                <i class="fas fa-user-plus"></i> Sign Up
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== SIGN IN MODAL ===== -->
+    <div class="modal-overlay" id="signInModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('signInModal')">&times;</button>
+            <div class="modal-header">
+                <h3>Welcome Back</h3>
+                <p>Sign in to your Bava account</p>
+            </div>
+            <form onsubmit="event.preventDefault(); closeModal('signInModal');">
+                <div class="form-field">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-field">
+                    <label>Password</label>
+                    <input type="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="modal-submit">Sign In</button>
+            </form>
+            <div class="modal-divider"><span>or continue with</span></div>
+            <div class="social-btns">
+                <button class="social-btn google" onclick="showComingSoon('Google')">
+                    <i class="fab fa-google"></i> Continue with Google
+                </button>
+                <button class="social-btn facebook" onclick="showComingSoon('Facebook')">
+                    <i class="fab fa-facebook-f"></i> Continue with Facebook
+                </button>
+            </div>
+            <div class="modal-footer">
+                <p>Don't have an account? <a onclick="switchModal('signInModal', 'signUpModal')">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SIGN UP MODAL ===== -->
+    <div class="modal-overlay" id="signUpModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('signUpModal')">&times;</button>
+            <div class="modal-header">
+                <h3>Create Account</h3>
+                <p>Join the Bava family</p>
+            </div>
+            <form onsubmit="event.preventDefault(); closeModal('signUpModal'); alert('Account created successfully!');">
+                <div class="form-field">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Your full name" required>
+                </div>
+                <div class="form-field">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-field">
+                    <label>Password</label>
+                    <input type="password" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="modal-submit">Continue</button>
+            </form>
+            <div class="modal-divider"><span>or continue with</span></div>
+            <div class="social-btns">
+                <button class="social-btn google" onclick="showComingSoon('Google')">
+                    <i class="fab fa-google"></i> Continue with Google
+                </button>
+                <button class="social-btn facebook" onclick="showComingSoon('Facebook')">
+                    <i class="fab fa-facebook-f"></i> Continue with Facebook
+                </button>
+            </div>
+            <div class="modal-footer">
+                <p>Already have an account? <a onclick="switchModal('signUpModal', 'signInModal')">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== COMING SOON MODAL ===== -->
+    <div class="coming-soon-modal" id="comingSoonModal">
+        <div class="coming-soon-box">
+            <div class="coming-soon-icon"><i class="fas fa-clock"></i></div>
+            <h3>Coming Soon</h3>
+            <p id="comingSoonText">This feature is coming soon!</p>
+            <button class="coming-soon-close" onclick="closeAllModals()">Got It</button>
+        </div>
+    </div>
+
+    <!-- ===== CONTACT HERO ===== -->
+    <section class="hero" style="min-height: 50vh; padding: 140px 24px 60px;">
+        <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1800&h=600&fit=crop&q=85');"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge"><i class="fas fa-envelope"></i> Get in Touch</span>
+            <h1 class="hero-title">Contact <span class="text-gradient">Us</span></h1>
+            <p class="hero-subtitle">Have questions or want to make a reservation? We'd love to hear from you</p>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT INFO ===== -->
+    <section class="section" style="background: var(--dark);">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 60px;" class="contact-info-grid">
+                <div class="info-card reveal" style="background: var(--dark-light); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--glass-border); text-align: center;">
+                    <div style="width: 56px; height: 56px; background: rgba(26, 93, 26, 0.2); color: var(--primary-light); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 16px;">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 12px;">Locations</h3>
+                    <p style="color: var(--gray-light); font-size: 0.9rem; line-height: 1.6;">
+                        <strong>Thika</strong> — Kenyatta Hwy<br>
+                        <strong>Nakuru</strong> — Kenyatta Ave<br>
+                        <strong>Bungoma</strong> — Moi Ave
+                    </p>
+                </div>
+                <div class="info-card reveal" style="background: var(--dark-light); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--glass-border); text-align: center;">
+                    <div style="width: 56px; height: 56px; background: rgba(26, 93, 26, 0.2); color: var(--primary-light); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 16px;">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 12px;">Phone</h3>
+                    <p style="color: var(--gray-light); font-size: 0.95rem;">0743 462086</p>
+                    <p style="color: var(--gray); font-size: 0.8rem; margin-top: 8px;">Call for reservations</p>
+                </div>
+                <div class="info-card reveal" style="background: var(--dark-light); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--glass-border); text-align: center;">
+                    <div style="width: 56px; height: 56px; background: rgba(26, 93, 26, 0.2); color: var(--primary-light); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 16px;">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 12px;">Email</h3>
+                    <p style="color: var(--gray-light); font-size: 0.9rem;">info@bavarestaurant.co.ke</p>
+                    <p style="color: var(--gray); font-size: 0.8rem; margin-top: 8px;">Response within 24h</p>
+                </div>
+                <div class="info-card reveal" style="background: var(--dark-light); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--glass-border); text-align: center;">
+                    <div style="width: 56px; height: 56px; background: rgba(26, 93, 26, 0.2); color: var(--primary-light); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 16px;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 12px;">Hours</h3>
+                    <p style="color: var(--gray-light); font-size: 0.85rem; line-height: 1.6;">
+                        Mon-Fri: 9AM - 10PM<br>
+                        Sat-Sun: 10AM - 9PM
+                    </p>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div style="max-width: 600px; margin: 0 auto;">
+                <div class="section-header">
+                    <span class="section-tag">Send a Message</span>
+                    <h2 class="section-title">Get in <span>Touch</span></h2>
+                </div>
+
+                <form style="background: var(--dark-light); padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--glass-border);" onsubmit="event.preventDefault(); alert('Message sent! We will get back to you soon.');">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <div class="form-field">
+                            <label style="display: block; color: rgba(255,255,255,0.8); font-size: 0.85rem; font-weight: 500; margin-bottom: 8px;">Full Name</label>
+                            <input type="text" placeholder="Your full name" required style="width: 100%; padding: 14px 16px; background: var(--dark); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); color: white; font-size: 0.95rem;">
+                        </div>
+                        <div class="form-field">
+                            <label style="display: block; color: rgba(255,255,255,0.8); font-size: 0.85rem; font-weight: 500; margin-bottom: 8px;">Email</label>
+                            <input type="email" placeholder="you@example.com" required style="width: 100%; padding: 14px 16px; background: var(--dark); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); color: white; font-size: 0.95rem;">
+                        </div>
+                    </div>
+                    <div class="form-field" style="margin-bottom: 20px;">
+                        <label style="display: block; color: rgba(255,255,255,0.8); font-size: 0.85rem; font-weight: 500; margin-bottom: 8px;">Subject</label>
+                        <select required style="width: 100%; padding: 14px 16px; background: var(--dark); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); color: white; font-size: 0.95rem;">
+                            <option value="">Select a subject</option>
+                            <option value="reservation">Table Reservation</option>
+                            <option value="catering">Catering Inquiry</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="careers">Careers</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-field" style="margin-bottom: 20px;">
+                        <label style="display: block; color: rgba(255,255,255,0.8); font-size: 0.85rem; font-weight: 500; margin-bottom: 8px;">Message</label>
+                        <textarea rows="5" placeholder="Your message..." required style="width: 100%; padding: 14px 16px; background: var(--dark); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); color: white; font-size: 0.95rem; resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <i class="fas fa-utensils"></i> BAVA
+                    </a>
+                    <p class="footer-desc">Authentic East African cuisine crafted with love.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Locations</h4>
+                    <ul>
+                        <li>Thika — Kenyatta Hwy</li>
+                        <li>Nakuru — Kenyatta Ave</li>
+                        <li>Bungoma — Moi Ave</li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-phone"></i> 0743 462086</p>
+                    <p><i class="fas fa-envelope"></i> info@bavarestaurant.co.ke</p>
+                    <p><i class="fas fa-clock"></i> Mon-Sun: 9AM - 10PM</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Bava Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== CHATBOT ===== -->
+    <div class="chatbot-btn" id="chatbotBtn">
+        <i class="fas fa-robot"></i>
+        <span class="chatbot-badge">AI</span>
+    </div>
+
+    <div class="chatbot" id="chatbot">
+        <div class="chatbot-header">
+            <div class="chatbot-avatar"><i class="fas fa-robot"></i></div>
+            <div class="chatbot-info">
+                <h4>Bava AI Assistant</h4>
+                <p>Online</p>
+            </div>
+            <button class="chatbot-close" id="chatbotClose">&times;</button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message bot">
+                <p>Welcome to Bava Restaurant! How can I help you today?</p>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Ask me anything...">
+            <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/viewer.js"></script>
+    <style>
+        @media (max-width: 1024px) {
+            .contact-info-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .contact-info-grid {
+                grid-template-columns: 1fr !important;
+            }
+            form[style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</body>
+</html>
