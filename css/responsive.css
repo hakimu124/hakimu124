@@ -15,12 +15,18 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 32px;
     }
+
+    .nav-download {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+    }
 }
 
 /* Tablets */
 @media (max-width: 768px) {
     .nav-links,
-    .nav-auth {
+    .nav-auth,
+    .nav-user {
         display: none;
     }
 

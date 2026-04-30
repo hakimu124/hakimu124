@@ -1,0 +1,26 @@
+{
+  "name": "Bava Restaurant",
+  "short_name": "Bava",
+  "description": "Premium East African cuisine with immersive 3D food experiences",
+  "start_url": "/bava-restaurant/index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#1a5d1a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "lifestyle"],
+  "lang": "en"
+}

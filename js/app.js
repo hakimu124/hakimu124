@@ -1,5 +1,157 @@
 // ===== Bava Restaurant - App JS =====
 
+// PWA Install Prompt
+let deferredPrompt;
+const downloadModal = document.getElementById('downloadModal');
+const installBtn = document.getElementById('installBtn');
+const downloadMessage = document.getElementById('downloadMessage');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    downloadApp();
+});
+
+window.addEventListener('appinstalled', () => {
+    closeDownloadModal();
+    deferredPrompt = null;
+});
+
+// Download App Function
+function downloadApp() {
+    if (deferredPrompt) {
+        downloadMessage.textContent = 'Tap the button below to install Bava Restaurant';
+        installBtn.style.display = 'inline-flex';
+        installBtn.onclick = installApp;
+    } else if ('ontouchstart' in window) {
+        downloadMessage.textContent = 'To install, use your browser menu and tap "Add to Home Screen"';
+        installBtn.style.display = 'none';
+    } else {
+        downloadMessage.textContent = 'To install on desktop, click the browser menu and select "Install Bava Restaurant"';
+        installBtn.style.display = 'none';
+    }
+    downloadModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function installApp() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                closeDownloadModal();
+            }
+            deferredPrompt = null;
+        });
+    }
+}
+
+function closeDownloadModal() {
+    downloadModal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// User Auth System
+const USER_KEY = 'bava_user';
+
+function getInitials(name) {
+    if (!name) return '??';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length === 1) {
+        return parts[0].substring(0, 2).toUpperCase();
+    }
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function saveUser(name, email) {
+    const user = { name, email, initials: getInitials(name) };
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    return user;
+}
+
+function getUser() {
+    const data = localStorage.getItem(USER_KEY);
+    return data ? JSON.parse(data) : null;
+}
+
+function logout() {
+    localStorage.removeItem(USER_KEY);
+    updateAuthUI();
+    closeUserDropdown();
+}
+
+function handleSignIn() {
+    const email = document.getElementById('signInEmail').value;
+    const password = document.getElementById('signInPassword').value;
+    // Simulate auth - in real app, validate with backend
+    // For demo, extract name from email
+    const name = email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    saveUser(name, email);
+    closeModal('signInModal');
+    updateAuthUI();
+}
+
+function handleSignUp() {
+    const name = document.getElementById('signUpName').value;
+    const email = document.getElementById('signUpEmail').value;
+    saveUser(name, email);
+    closeModal('signUpModal');
+    updateAuthUI();
+}
+
+function updateAuthUI() {
+    const user = getUser();
+    const navAuth = document.getElementById('navAuth');
+    const navUser = document.getElementById('navUser');
+    const mobileNavAuth = document.getElementById('mobileNavAuth');
+    const mobileUserSection = document.getElementById('mobileUserSection');
+
+    if (user) {
+        navAuth.style.display = 'none';
+        navUser.style.display = 'block';
+        document.getElementById('userInitials').textContent = user.initials;
+        document.getElementById('dropdownName').textContent = user.name;
+        document.getElementById('dropdownEmail').textContent = user.email;
+
+        mobileNavAuth.style.display = 'none';
+        mobileUserSection.classList.add('active');
+        document.getElementById('mobileUserInitials').textContent = user.initials;
+        document.getElementById('mobileUserName').textContent = user.name;
+    } else {
+        navAuth.style.display = 'flex';
+        navUser.style.display = 'none';
+        mobileNavAuth.style.display = 'flex';
+        mobileUserSection.classList.remove('active');
+    }
+}
+
+function toggleUserDropdown() {
+    const dropdown = document.getElementById('userDropdown');
+    dropdown.classList.toggle('active');
+}
+
+function closeUserDropdown() {
+    const dropdown = document.getElementById('userDropdown');
+    dropdown.classList.remove('active');
+}
+
+function showProfile() {
+    const user = getUser();
+    if (user) {
+        alert(`Profile\n\nName: ${user.name}\nEmail: ${user.email}`);
+    }
+    closeUserDropdown();
+}
+
+// Close dropdown on outside click
+document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('userDropdown');
+    const avatarBtn = document.getElementById('userAvatarBtn');
+    if (dropdown && avatarBtn && !dropdown.contains(e.target) && !avatarBtn.contains(e.target)) {
+        dropdown.classList.remove('active');
+    }
+});
+
 // Menu Items Data
 const menuItems = [
     // Main Dishes
@@ -288,6 +440,7 @@ if (statsSection) {
 document.addEventListener('DOMContentLoaded', () => {
     renderFeatured();
     initRevealAnimations();
+    updateAuthUI(); // Initialize auth UI from localStorage
 });
 
 // Global functions for onclick handlers
@@ -361,3 +514,12 @@ window.openModal = openModal;
 window.closeModal = closeModal;
 window.closeAllModals = closeAllModals;
 window.showComingSoon = showComingSoon;
+window.downloadApp = downloadApp;
+window.closeDownloadModal = closeDownloadModal;
+window.installApp = installApp;
+window.toggleUserDropdown = toggleUserDropdown;
+window.closeUserDropdown = closeUserDropdown;
+window.showProfile = showProfile;
+window.logout = logout;
+window.handleSignIn = handleSignIn;
+window.handleSignUp = handleSignUp;
